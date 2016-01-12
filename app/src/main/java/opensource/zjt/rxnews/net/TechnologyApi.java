@@ -5,6 +5,7 @@ import retrofit.http.GET;
 import retrofit.http.HEAD;
 import retrofit.http.Part;
 import retrofit.http.Path;
+import retrofit.http.Query;
 import rx.Observable;
 import rx.observers.Observers;
 
@@ -14,8 +15,8 @@ import rx.observers.Observers;
  */
 public interface TechnologyApi {
 
-    @GET("{num}")
-    Observable<News> loadNews(@Path("num") String num);
+    @GET("/keji/other/?&num=10")
+    Observable<News> loadNews( @Query("key") String key);
 
     @GET("{num}/{page}")
     Observable<News> loadMoreNews(@Path("num") String num, @Path("page") String page);

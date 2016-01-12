@@ -5,5 +5,5 @@ package opensource.zjt.rxnews.net;
  * Copyright © 2015 impetusconsulting. All rights reserved
  */
 public class Url {
-    public static final String BASEURL ="http://api.huceo.com/keji/other/";
+    public static final String BASEURL ="http://api.huceo.com";
 }

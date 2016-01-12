@@ -98,6 +98,17 @@ public class News extends BaseModel {
         public String getUrl() {
             return url;
         }
+
+        @Override
+        public String toString() {
+            return "NewslistEntity{" +
+                    "ctime='" + ctime + '\'' +
+                    ", title='" + title + '\'' +
+                    ", description='" + description + '\'' +
+                    ", picUrl='" + picUrl + '\'' +
+                    ", url='" + url + '\'' +
+                    '}';
+        }
     }
 
     @Override
@@ -134,4 +145,13 @@ public class News extends BaseModel {
             return new News[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "News{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", newslist=" + newslist.size() +
+                '}';
+    }
 }

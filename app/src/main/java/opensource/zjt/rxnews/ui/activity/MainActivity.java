@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import opensource.zjt.rxnews.R;
+import opensource.zjt.rxnews.rxmethod.RxNews;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                RxNews.updataNews(10);
+
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
