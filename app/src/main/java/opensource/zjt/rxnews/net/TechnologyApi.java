@@ -15,8 +15,8 @@ import rx.observers.Observers;
  */
 public interface TechnologyApi {
 
-    @GET("/keji/other/?&num=10")
-    Observable<News> loadNews( @Query("key") String key);
+    @GET("/keji/other/?")
+    Observable<News> loadNews( @Query("key") String key,@Query("num") String num);
 
     @GET("{num}/{page}")
     Observable<News> loadMoreNews(@Path("num") String num, @Path("page") String page);

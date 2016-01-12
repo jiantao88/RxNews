@@ -24,7 +24,7 @@ public class RxNews {
 
 
     public static Subscription updataNews(int num) {
-        Subscription subscription = NewsFactory.getTechnologyApi().loadNews("09fc0a2397154952297ea4b7e6b2646a")
+        Subscription subscription = NewsFactory.getTechnologyApi().loadNews("09fc0a2397154952297ea4b7e6b2646a",num+"")
                 .subscribeOn(Schedulers.newThread()).doOnNext(new Action1<News>() {
                     @Override
                     public void call(News news) {
