@@ -21,17 +21,12 @@ public class NewsClient {
     private OkHttpClient httpClient = new OkHttpClient();
 
     NewsClient() {
-//        initNewhttpClient(httpClient);
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Url.BASEURL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-//                .client(httpClient)
                 .build();
 
         technologyApi = retrofit.create(TechnologyApi.class);
-    }
-
-    public void useOKHttp() {
     }
 
     public boolean initNewhttpClient(OkHttpClient client) {

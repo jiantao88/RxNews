@@ -9,7 +9,7 @@ import java.util.List;
  * Created by JianTao on 16/1/10.
  * Copyright © 2015 impetusconsulting. All rights reserved
  */
-public class News extends BaseModel {
+public class NewsModel extends BaseModel {
     /**
      * code : 200
      * msg : ok
@@ -124,11 +124,11 @@ public class News extends BaseModel {
         dest.writeList(this.newslist);
     }
 
-    public News() {
+    public NewsModel() {
         super();
     }
 
-    protected News(Parcel in) {
+    protected NewsModel(Parcel in) {
         super(in);
         this.code = in.readInt();
         this.msg = in.readString();
@@ -136,19 +136,19 @@ public class News extends BaseModel {
         in.readList(this.newslist, List.class.getClassLoader());
     }
 
-    public static final Creator<News> CREATOR = new Creator<News>() {
-        public News createFromParcel(Parcel source) {
-            return new News(source);
+    public static final Creator<NewsModel> CREATOR = new Creator<NewsModel>() {
+        public NewsModel createFromParcel(Parcel source) {
+            return new NewsModel(source);
         }
 
-        public News[] newArray(int size) {
-            return new News[size];
+        public NewsModel[] newArray(int size) {
+            return new NewsModel[size];
         }
     };
 
     @Override
     public String toString() {
-        return "News{" +
+        return "NewsModel{" +
                 "code=" + code +
                 ", msg='" + msg + '\'' +
                 ", newslist=" + newslist.size() +

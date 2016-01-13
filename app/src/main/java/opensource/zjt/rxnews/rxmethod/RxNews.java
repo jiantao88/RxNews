@@ -1,16 +1,9 @@
 package opensource.zjt.rxnews.rxmethod;
 
 import com.socks.library.KLog;
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
-import java.io.IOException;
-
-import opensource.zjt.rxnews.model.News;
+import opensource.zjt.rxnews.model.NewsModel;
 import opensource.zjt.rxnews.net.NewsFactory;
-import rx.Scheduler;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -25,14 +18,14 @@ public class RxNews {
 
     public static Subscription updataNews(int num) {
         Subscription subscription = NewsFactory.getTechnologyApi().loadNews("09fc0a2397154952297ea4b7e6b2646a",num+"")
-                .subscribeOn(Schedulers.newThread()).doOnNext(new Action1<News>() {
+                .subscribeOn(Schedulers.newThread()).doOnNext(new Action1<NewsModel>() {
                     @Override
-                    public void call(News news) {
+                    public void call(NewsModel news) {
                         KLog.a("news", news.toString());
                     }
-                }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<News>() {
+                }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<NewsModel>() {
                     @Override
-                    public void call(News news) {
+                    public void call(NewsModel news) {
                         KLog.a("news", news.toString());
                     }
                 }, new Action1<Throwable>() {
