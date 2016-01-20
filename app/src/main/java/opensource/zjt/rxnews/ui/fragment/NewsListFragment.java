@@ -32,9 +32,7 @@ import rx.functions.Action1;
 
 /**
  * A fragment representing a list of Items.
- * <p>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
+ * <p/>
  */
 public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -45,7 +43,6 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Bind(R.id.swipe_refresh_widget)
     SwipeRefreshLayout mSwipeRefreshWidget;
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
     private LinearLayoutManager mLayoutManager;
     private int pageIndex;
     private List<NewsModel.NewslistEntity> mData;
@@ -95,7 +92,6 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
         mAdapter.setOnItemClickListener(mOnItemClickListener);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setOnScrollListener(mOnScrollListener);
-        onRefresh();
         RxBus.getInstance().toObservable().subscribe(newsEventAction);
         return view;
     }
@@ -105,14 +101,14 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
         public void call(Object o) {
             if (o instanceof NewsEvent) {
                 mAdapter.isShowFooter(true);
-                if (mData==null){
+                if (mData == null) {
                     mData = new ArrayList<>();
                 }
                 mData.addAll(((NewsEvent) o).getNews().getNewslist());
-                if (pageIndex==0){
+                if (pageIndex == 0) {
                     mAdapter.setmDate(mData);
-                }else {
-                    if (((NewsEvent) o).getNews().getNewslist()==null||((NewsEvent) o).getNews().getNewslist().size()==0){
+                } else {
+                    if (((NewsEvent) o).getNews().getNewslist() == null || ((NewsEvent) o).getNews().getNewslist().size() == 0) {
                         mAdapter.isShowFooter(false);
                     }
                     mAdapter.notifyDataSetChanged();
@@ -164,7 +160,6 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     @Override
@@ -179,21 +174,6 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
         if (mData != null) {
             mData.clear();
         }
-//        NewsFactory.getRxNewsApi().loadNews(RxNews.KEY,10);
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
-    }
 }
