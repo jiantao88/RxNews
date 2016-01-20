@@ -1,4 +1,4 @@
-package opensource.zjt.rxnews.ui.activity.fragment;
+package opensource.zjt.rxnews.ui.fragment;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -12,15 +12,10 @@ import com.bumptech.glide.Glide;
 
 import opensource.zjt.rxnews.R;
 import opensource.zjt.rxnews.model.NewsModel;
-import opensource.zjt.rxnews.ui.activity.fragment.NewsListFragment.OnListFragmentInteractionListener;
-import opensource.zjt.rxnews.ui.activity.fragment.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
  */
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

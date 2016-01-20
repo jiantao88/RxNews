@@ -5,19 +5,19 @@ package opensource.zjt.rxnews.net;
  * Copyright © 2015 impetusconsulting. All rights reserved
  */
 public class NewsFactory {
-    private static TechnologyApi technologyApi;
+    private static RxNewsApi rxNewsApi;
 
     public NewsFactory() {
 
     }
 
-    public static TechnologyApi getTechnologyApi() {
+    public static RxNewsApi getRxNewsApi() {
         synchronized (NewsFactory.class) {
-            if (technologyApi == null) {
+            if (rxNewsApi == null) {
                 NewsClient newsClient = new NewsClient();
-                technologyApi = newsClient.getTechnologyApi();
+                rxNewsApi = newsClient.getRxNewsApi();
             }
-            return technologyApi;
+            return rxNewsApi;
         }
     }
 }

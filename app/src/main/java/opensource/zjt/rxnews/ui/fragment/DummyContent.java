@@ -1,4 +1,4 @@
-package opensource.zjt.rxnews.ui.activity.fragment.dummy;
+package opensource.zjt.rxnews.ui.fragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package opensource.zjt.rxnews.ui.activity.fragment;
+package opensource.zjt.rxnews.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,15 +36,26 @@ public class NewsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_news, null);
-        ButterKnife.bind(this, super.onCreateView(inflater, container, savedInstanceState));
+        ButterKnife.bind(this, view);
         viewpager.setOffscreenPageLimit(3);
         tabLayout.addTab(tabLayout.newTab().setText("科技"));
         tabLayout.addTab(tabLayout.newTab().setText("体育"));
         tabLayout.addTab(tabLayout.newTab().setText("社会"));
         tabLayout.addTab(tabLayout.newTab().setText("娱乐"));
+        setViewPager(viewpager);
         tabLayout.setupWithViewPager(viewpager);
         return view;
+    }
+
+    private void setViewPager(ViewPager v) {
+        MyPagerAdapter adapter = new MyPagerAdapter(getChildFragmentManager());
+        adapter.addFragment(NewsListFragment.newInstance(0),"科技");
+        adapter.addFragment(NewsListFragment.newInstance(1),"国际");
+        adapter.addFragment(NewsListFragment.newInstance(2),"社会");
+        adapter.addFragment(NewsListFragment.newInstance(3),"体育");
+        v.setAdapter(adapter);
     }
 
     public static class MyPagerAdapter extends FragmentPagerAdapter {

@@ -1,9 +1,6 @@
-package opensource.zjt.rxnews.ui.activity.fragment;
+package opensource.zjt.rxnews.ui.fragment;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,19 +12,27 @@ import android.view.ViewGroup;
 
 import com.socks.library.KLog;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import opensource.zjt.rxnews.R;
+import opensource.zjt.rxnews.base.RxBus;
+import opensource.zjt.rxnews.event.NewsEvent;
 import opensource.zjt.rxnews.model.NewsModel;
-import opensource.zjt.rxnews.ui.activity.fragment.dummy.DummyContent;
-import opensource.zjt.rxnews.ui.activity.fragment.dummy.DummyContent.DummyItem;
+import opensource.zjt.rxnews.net.Constant;
+import opensource.zjt.rxnews.net.NewsFactory;
+import opensource.zjt.rxnews.rxmethod.RxNews;
+import opensource.zjt.rxnews.ui.fragment.DummyContent.DummyItem;
+import rx.functions.Action;
+import rx.functions.Action1;
 
 
 /**
  * A fragment representing a list of Items.
- * <p/>
+ * <p>
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
@@ -70,6 +75,7 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        RxNews.updataNews(10);
     }
 
     @Override
@@ -77,7 +83,7 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
         ButterKnife.bind(this, view);
-        mSwipeRefreshWidget.setColorSchemeResources(R.color.colorPrimary,
+        mSwipeRefreshWidget.setColorSchemeResources(R.color.colorAccent,
                 R.color.colorAccent, R.color.colorPrimaryDark,
                 R.color.colorAccent);
         mSwipeRefreshWidget.setOnRefreshListener(this);
@@ -90,9 +96,31 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
         recyclerView.setAdapter(mAdapter);
         recyclerView.setOnScrollListener(mOnScrollListener);
         onRefresh();
+        RxBus.getInstance().toObservable().subscribe(newsEventAction);
         return view;
     }
 
+    private Action1<? super Object> newsEventAction = new Action1<Object>() {
+        @Override
+        public void call(Object o) {
+            if (o instanceof NewsEvent) {
+                mAdapter.isShowFooter(true);
+                if (mData==null){
+                    mData = new ArrayList<>();
+                }
+                mData.addAll(((NewsEvent) o).getNews().getNewslist());
+                if (pageIndex==0){
+                    mAdapter.setmDate(mData);
+                }else {
+                    if (((NewsEvent) o).getNews().getNewslist()==null||((NewsEvent) o).getNews().getNewslist().size()==0){
+                        mAdapter.isShowFooter(false);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }
+                pageIndex += Constant.PAZE_SIZE;
+            }
+        }
+    };
     private MyItemRecyclerViewAdapter mAdapter;
     private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
 
@@ -148,9 +176,10 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void onRefresh() {
         pageIndex = 0;
-        if(mData != null) {
+        if (mData != null) {
             mData.clear();
         }
+//        NewsFactory.getRxNewsApi().loadNews(RxNews.KEY,10);
     }
 
     /**
@@ -158,7 +187,7 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
+     * <p>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.

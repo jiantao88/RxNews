@@ -10,7 +10,7 @@ import rx.Observable;
  * Created by JianTao on 16/1/10.
  * Copyright © 2015 impetusconsulting. All rights reserved
  */
-public interface TechnologyApi {
+public interface RxNewsApi {
 
     @GET("/keji/other/?")
     Observable<NewsModel> loadNews(@Query("key") String key, @Query("num") String num);
