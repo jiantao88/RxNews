@@ -6,4 +6,6 @@
 
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#727272</color>
+    <color name="main_bg">#eceff1</color>
+
 </resources>

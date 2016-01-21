@@ -70,7 +70,7 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mNewsPresenter = new NewsPresenterImpl(this);
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -93,6 +93,7 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
         mAdapter.setOnItemClickListener(mOnItemClickListener);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setOnScrollListener(mOnScrollListener);
+        mNewsPresenter = new NewsPresenterImpl(this);
         onRefresh();
         return view;
     }
@@ -125,7 +126,6 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
         public void onItemClick(View view, int position) {
             NewsModel.NewslistEntity news = mAdapter.getItem(position);
             Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
-            intent.putExtra("news", news.getUrl());
             intent.putExtra(Constant.NEWSDETAIL, news);
             View transitionView = view.findViewById(R.id.ivNews);
             ActivityOptionsCompat options =

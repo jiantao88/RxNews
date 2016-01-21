@@ -17,12 +17,15 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import opensource.zjt.rxnews.R;
+import opensource.zjt.rxnews.base.AppService;
+import opensource.zjt.rxnews.base.BaseFragment;
+import opensource.zjt.rxnews.net.Constant;
 
 /**
  * Created by JianTao on 16/1/13.
  * Copyright © 2015 impetusconsulting. All rights reserved
  */
-public class NewsFragment extends Fragment {
+public class NewsFragment extends BaseFragment {
     @Bind(R.id.tab_layout)
     TabLayout tabLayout;
     @Bind(R.id.viewpager)
@@ -40,12 +43,9 @@ public class NewsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_news, null);
         ButterKnife.bind(this, view);
         viewpager.setOffscreenPageLimit(3);
-        tabLayout.addTab(tabLayout.newTab().setText("科技"));
-        tabLayout.addTab(tabLayout.newTab().setText("体育"));
-        tabLayout.addTab(tabLayout.newTab().setText("社会"));
-        tabLayout.addTab(tabLayout.newTab().setText("娱乐"));
         setViewPager(viewpager);
         tabLayout.setupWithViewPager(viewpager);
+        AppService.getInstance().initNews(getmTaskId(), Constant.NEWSTYPE_KEJI);
         return view;
     }
 
