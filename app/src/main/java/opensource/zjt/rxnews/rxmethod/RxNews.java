@@ -19,8 +19,8 @@ import rx.schedulers.Schedulers;
 public class RxNews {
     public static final String KEY = "09fc0a2397154952297ea4b7e6b2646a";
 
-    public static Subscription updataNews(final int num) {
-        Subscription subscription = NewsFactory.getRxNewsApi().loadNews(KEY, num + "")
+    public static Subscription updataNews(final String type, final int page) {
+        Subscription subscription = NewsFactory.getRxNewsApi().loadNews(type,KEY, 10 + "",page+"")
                 .subscribeOn(Schedulers.newThread()).doOnNext(new Action1<NewsModel>() {
                     @Override
                     public void call(NewsModel news) {
@@ -29,9 +29,11 @@ public class RxNews {
                     @Override
                     public void call(NewsModel news) {
                         KLog.a("news", news.toString());
-                        NewsEvent newsEvent = new NewsEvent(news, Constant.GetNewsWay.INIT, num+"");
+                        NewsEvent newsEvent = new NewsEvent(news, Constant.GetNewsWay.INIT, type);
                         if (news==null){
                             newsEvent.setmEventResult(Constant.Result.FAIL);
+                        }else {
+                            newsEvent.setmEventResult(Constant.Result.SUCCESSS);
                         }
                         RxBus.getInstance().send(newsEvent);
                     }
@@ -39,7 +41,7 @@ public class RxNews {
                     @Override
                     public void call(Throwable throwable) {
                         KLog.a("newsError", throwable.toString());
-                        NewsEvent newsEvent= new NewsEvent(new NewsModel(), Constant.GetNewsWay.INIT,num+"");
+                        NewsEvent newsEvent= new NewsEvent(new NewsModel(), Constant.GetNewsWay.INIT,type);
                         newsEvent.setmEventResult(Constant.Result.FAIL);
                         RxBus.getInstance().send(newsEvent);
                     }

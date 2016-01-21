@@ -2,6 +2,7 @@ package opensource.zjt.rxnews.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -24,16 +25,18 @@ import opensource.zjt.rxnews.base.RxBus;
 import opensource.zjt.rxnews.event.NewsEvent;
 import opensource.zjt.rxnews.bean.NewsModel;
 import opensource.zjt.rxnews.net.Constant;
+import opensource.zjt.rxnews.presenter.NewsPresenter;
+import opensource.zjt.rxnews.presenter.NewsPresenterImpl;
 import opensource.zjt.rxnews.rxmethod.RxNews;
 import opensource.zjt.rxnews.ui.activity.NewsDetailActivity;
+import opensource.zjt.rxnews.view.NewsView;
 import rx.functions.Action1;
-
 
 /**
  * A fragment representing a list of Items.
  * <p/>
  */
-public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, NewsView {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String TAG = NewsListFragment.class.getName();
@@ -43,9 +46,9 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
     SwipeRefreshLayout mSwipeRefreshWidget;
     private int mColumnCount = 1;
     private LinearLayoutManager mLayoutManager;
-    private int pageIndex;
+    private int pageIndex = 1;
     private List<NewsModel.NewslistEntity> mData;
-
+    private NewsPresenter mNewsPresenter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -67,11 +70,10 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mNewsPresenter = new NewsPresenterImpl(this);
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
-        RxNews.updataNews(10);
     }
 
     @Override
@@ -91,31 +93,10 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
         mAdapter.setOnItemClickListener(mOnItemClickListener);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setOnScrollListener(mOnScrollListener);
-        RxBus.getInstance().toObservable().subscribe(newsEventAction);
+        onRefresh();
         return view;
     }
 
-    private Action1<? super Object> newsEventAction = new Action1<Object>() {
-        @Override
-        public void call(Object o) {
-            if (o instanceof NewsEvent) {
-                mAdapter.isShowFooter(true);
-                if (mData == null) {
-                    mData = new ArrayList<>();
-                }
-                mData.addAll(((NewsEvent) o).getNews().getNewslist());
-                if (pageIndex == 0) {
-                    mAdapter.setmDate(mData);
-                } else {
-                    if (((NewsEvent) o).getNews().getNewslist() == null || ((NewsEvent) o).getNews().getNewslist().size() == 0) {
-                        mAdapter.isShowFooter(false);
-                    }
-                    mAdapter.notifyDataSetChanged();
-                }
-                pageIndex += Constant.PAZE_SIZE;
-            }
-        }
-    };
     private MyItemRecyclerViewAdapter mAdapter;
     private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
 
@@ -135,7 +116,7 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
                     && mAdapter.isShowFooter()) {
                 //加载更多
                 KLog.d(TAG, "loading more data");
-//                mNewsPresenter.loadNews(mType, pageIndex + Urls.PAZE_SIZE);
+                mNewsPresenter.loadNews(mColumnCount, pageIndex++);
             }
         }
     };
@@ -169,10 +150,48 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-        pageIndex = 0;
+        pageIndex = 1;
         if (mData != null) {
             mData.clear();
         }
+        mNewsPresenter.loadNews(mColumnCount, pageIndex);
     }
 
+    @Override
+    public void addNew(List<NewsModel.NewslistEntity> list) {
+        mAdapter.isShowFooter(true);
+        if (mData == null) {
+            mData = new ArrayList<>();
+        }
+        mData.addAll(list);
+        if (pageIndex == 1) {
+            mAdapter.setmDate(mData);
+        } else {
+            if (list == null || list.size() == 0) {
+                mAdapter.isShowFooter(false);
+            }
+            mAdapter.notifyDataSetChanged();
+        }
+        pageIndex += Constant.PAZE_SIZE;
+    }
+
+    @Override
+    public void showProgress() {
+        mSwipeRefreshWidget.setRefreshing(true);
+    }
+
+    @Override
+    public void hideProgress() {
+        mSwipeRefreshWidget.setRefreshing(false);
+    }
+
+    @Override
+    public void showLoadFail() {
+        if (pageIndex == 1) {
+            mAdapter.isShowFooter(false);
+            mAdapter.notifyDataSetChanged();
+        }
+        View view = getActivity() == null ? recyclerView.getRootView() : getActivity().findViewById(R.id.drawer_layout);
+        Snackbar.make(view, getString(R.string.load_fail), Snackbar.LENGTH_SHORT).show();
+    }
 }

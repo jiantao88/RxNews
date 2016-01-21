@@ -12,8 +12,11 @@ import rx.Observable;
  */
 public interface RxNewsApi {
 
-    @GET("/keji/other/?")
-    Observable<NewsModel> loadNews(@Query("key") String key, @Query("num") String num);
+    @GET("/{type}/other")
+    Observable<NewsModel> loadNews(@Path("type")String type,
+                                   @Query("key") String key,
+                                   @Query("num") String num,
+                                   @Query("page")String page);
 
     @GET("{num}/{page}")
     Observable<NewsModel> loadMoreNews(@Path("num") String num, @Path("page") String page);

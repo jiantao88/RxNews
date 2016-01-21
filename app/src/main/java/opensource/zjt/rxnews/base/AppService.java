@@ -62,8 +62,8 @@ public class AppService {
         return compositeSubscription;
     }
 
-    public void initNews(int taskId, int num) {
-        getCompositeSubscription(taskId).add(RxNews.updataNews(num));
+    public void initNews(int taskId, String type) {
+        getCompositeSubscription(taskId).add(RxNews.updataNews(type,1));
     }
 
     public Map<Integer, CompositeSubscription> getCompositeSubscriptionMap() {
