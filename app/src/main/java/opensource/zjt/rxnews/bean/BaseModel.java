@@ -1,4 +1,4 @@
-package opensource.zjt.rxnews.model;
+package opensource.zjt.rxnews.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;

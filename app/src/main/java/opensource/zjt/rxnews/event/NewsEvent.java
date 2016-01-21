@@ -1,6 +1,6 @@
 package opensource.zjt.rxnews.event;
 
-import opensource.zjt.rxnews.model.NewsModel;
+import opensource.zjt.rxnews.bean.NewsModel;
 import opensource.zjt.rxnews.net.Constant;
 
 /**

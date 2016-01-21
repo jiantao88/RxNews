@@ -17,9 +17,10 @@ import android.widget.FrameLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import opensource.zjt.rxnews.R;
+import opensource.zjt.rxnews.base.BaseActivity;
 import opensource.zjt.rxnews.ui.fragment.NewsFragment;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Bind(R.id.toolbar)
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         navView.setNavigationItemSelectedListener(this);
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_content,new NewsFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new NewsFragment()).commit();
         toolbar.setTitle("新闻");
     }
 
@@ -97,8 +98,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_news) {
-            // Handle the camera action
-            getSupportFragmentManager().beginTransaction().replace(R.id.frame_content,new NewsFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new NewsFragment()).commit();
         } else if (id == R.id.nav_picture) {
 
         } else if (id == R.id.nav_slideshow) {

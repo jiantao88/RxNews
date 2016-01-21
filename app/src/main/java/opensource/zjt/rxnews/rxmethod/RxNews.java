@@ -4,7 +4,7 @@ import com.socks.library.KLog;
 
 import opensource.zjt.rxnews.base.RxBus;
 import opensource.zjt.rxnews.event.NewsEvent;
-import opensource.zjt.rxnews.model.NewsModel;
+import opensource.zjt.rxnews.bean.NewsModel;
 import opensource.zjt.rxnews.net.Constant;
 import opensource.zjt.rxnews.net.NewsFactory;
 import rx.Subscription;

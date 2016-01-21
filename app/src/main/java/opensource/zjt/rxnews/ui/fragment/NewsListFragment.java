@@ -1,6 +1,8 @@
 package opensource.zjt.rxnews.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,7 +15,6 @@ import android.view.ViewGroup;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -21,12 +22,10 @@ import butterknife.ButterKnife;
 import opensource.zjt.rxnews.R;
 import opensource.zjt.rxnews.base.RxBus;
 import opensource.zjt.rxnews.event.NewsEvent;
-import opensource.zjt.rxnews.model.NewsModel;
+import opensource.zjt.rxnews.bean.NewsModel;
 import opensource.zjt.rxnews.net.Constant;
-import opensource.zjt.rxnews.net.NewsFactory;
 import opensource.zjt.rxnews.rxmethod.RxNews;
-import opensource.zjt.rxnews.ui.fragment.DummyContent.DummyItem;
-import rx.functions.Action;
+import opensource.zjt.rxnews.ui.activity.NewsDetailActivity;
 import rx.functions.Action1;
 
 
@@ -144,15 +143,15 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
         @Override
         public void onItemClick(View view, int position) {
             NewsModel.NewslistEntity news = mAdapter.getItem(position);
-//            Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
-//            intent.putExtra("news", news);
-
+            Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
+            intent.putExtra("news", news.getUrl());
+            intent.putExtra(Constant.NEWSDETAIL, news);
             View transitionView = view.findViewById(R.id.ivNews);
             ActivityOptionsCompat options =
                     ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                             transitionView, getString(R.string.transition_news_img));
 
-//            ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
+            ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
         }
     };
 

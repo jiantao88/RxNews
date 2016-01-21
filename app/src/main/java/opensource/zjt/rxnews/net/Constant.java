@@ -7,6 +7,7 @@ package opensource.zjt.rxnews.net;
 public class Constant {
     public static final String BASEURL = "http://api.huceo.com";
     public static final int PAZE_SIZE = 10;
+    public static final String NEWSDETAIL = "newsdetal";
     public enum GetNewsWay {
         INIT, UPDATA, LOADMORE;
     }

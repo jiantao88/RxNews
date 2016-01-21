@@ -1,6 +1,6 @@
 package opensource.zjt.rxnews.net;
 
-import opensource.zjt.rxnews.model.NewsModel;
+import opensource.zjt.rxnews.bean.NewsModel;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;

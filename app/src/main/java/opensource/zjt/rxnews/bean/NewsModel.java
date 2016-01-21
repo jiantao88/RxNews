@@ -1,7 +1,8 @@
-package opensource.zjt.rxnews.model;
+package opensource.zjt.rxnews.bean;
 
 import android.os.Parcel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class NewsModel extends BaseModel {
         return newslist;
     }
 
-    public static class NewslistEntity {
+    public static class NewslistEntity extends BaseModel {
         private String ctime;
         private String title;
         private String description;
@@ -109,6 +110,43 @@ public class NewsModel extends BaseModel {
                     ", url='" + url + '\'' +
                     '}';
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            super.writeToParcel(dest, flags);
+            dest.writeString(this.ctime);
+            dest.writeString(this.title);
+            dest.writeString(this.description);
+            dest.writeString(this.picUrl);
+            dest.writeString(this.url);
+        }
+
+        public NewslistEntity() {
+        }
+
+        protected NewslistEntity(Parcel in) {
+            super(in);
+            this.ctime = in.readString();
+            this.title = in.readString();
+            this.description = in.readString();
+            this.picUrl = in.readString();
+            this.url = in.readString();
+        }
+
+        public static final Creator<NewslistEntity> CREATOR = new Creator<NewslistEntity>() {
+            public NewslistEntity createFromParcel(Parcel source) {
+                return new NewslistEntity(source);
+            }
+
+            public NewslistEntity[] newArray(int size) {
+                return new NewslistEntity[size];
+            }
+        };
     }
 
     @Override

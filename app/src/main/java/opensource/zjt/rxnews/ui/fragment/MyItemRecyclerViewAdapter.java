@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import opensource.zjt.rxnews.R;
-import opensource.zjt.rxnews.model.NewsModel;
+import opensource.zjt.rxnews.bean.NewsModel;
 
 import java.util.List;
 
