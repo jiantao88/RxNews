@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import opensource.zjt.rxnews.net.NewsFactory;
 import opensource.zjt.rxnews.net.RxNewsApi;
 import opensource.zjt.rxnews.rxmethod.RxNews;
@@ -19,6 +21,7 @@ public class AppService {
     private static RxNewsApi rxNewsApi;
     private static ExecutorService sSingleThreadExecutor;
     private Map<Integer, CompositeSubscription> compositeSubscriptionMap;
+    private static Realm mRealm;
 
     public AppService() {
     }
@@ -32,6 +35,9 @@ public class AppService {
                 rxNewsApi = NewsFactory.getRxNewsApi();
             }
         });
+        mRealm = Realm.getInstance(new RealmConfiguration.
+                Builder(BaseApplication.getmContext()).
+                name("rxnews.realm").build());
     }
 
     public void addCompositeSub(int taskId) {
@@ -63,7 +69,11 @@ public class AppService {
     }
 
     public void initNews(int taskId, String type) {
-        getCompositeSubscription(taskId).add(RxNews.updataNews(type,1));
+        getCompositeSubscription(taskId).add(RxNews.initNews(type));
+    }
+
+    public void updataNews(int taskId, String type) {
+        getCompositeSubscription(taskId).add(RxNews.updataNews(type, 1));
     }
 
     public Map<Integer, CompositeSubscription> getCompositeSubscriptionMap() {
@@ -80,5 +90,9 @@ public class AppService {
 
     public static ExecutorService getsSingleThreadExecutor() {
         return sSingleThreadExecutor;
+    }
+
+    public static Realm getmRealm() {
+        return mRealm;
     }
 }

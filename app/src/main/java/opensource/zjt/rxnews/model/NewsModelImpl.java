@@ -1,5 +1,6 @@
 package opensource.zjt.rxnews.model;
 
+import opensource.zjt.rxnews.base.AppService;
 import opensource.zjt.rxnews.net.Constant;
 import opensource.zjt.rxnews.rxmethod.RxNews;
 
