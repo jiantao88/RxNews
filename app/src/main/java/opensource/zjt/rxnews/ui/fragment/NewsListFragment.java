@@ -21,6 +21,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import opensource.zjt.rxnews.R;
+import opensource.zjt.rxnews.base.AppService;
 import opensource.zjt.rxnews.base.RxBus;
 import opensource.zjt.rxnews.event.NewsEvent;
 import opensource.zjt.rxnews.bean.NewsModel;
@@ -74,6 +75,7 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        AppService.getInstance().initNews(getActivity().getTaskId(), getID(mColumnCount));
     }
 
     @Override
@@ -143,9 +145,10 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onDestroy() {
+        super.onDestroy();
         ButterKnife.unbind(this);
+
     }
 
     @Override
@@ -177,12 +180,14 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void showProgress() {
-        mSwipeRefreshWidget.setRefreshing(true);
+        if (mSwipeRefreshWidget != null)
+            mSwipeRefreshWidget.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        mSwipeRefreshWidget.setRefreshing(false);
+        if (mSwipeRefreshWidget != null)
+            mSwipeRefreshWidget.setRefreshing(false);
     }
 
     @Override
@@ -193,5 +198,27 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
         }
         View view = getActivity() == null ? recyclerView.getRootView() : getActivity().findViewById(R.id.drawer_layout);
         Snackbar.make(view, getString(R.string.load_fail), Snackbar.LENGTH_SHORT).show();
+    }
+
+    private String getID(int type) {
+        String id;
+        switch (type) {
+            case 0:
+                id = Constant.NEWSTYPE_KEJI;
+                break;
+            case 1:
+                id = Constant.NEWSTYPE_GUOJI;
+                break;
+            case 2:
+                id = Constant.NEWSTYPE_SHEHUI;
+                break;
+            case 3:
+                id = Constant.NEWSTYPE_TIYU;
+                break;
+            default:
+                id = Constant.NEWSTYPE_KEJI;
+                break;
+        }
+        return id;
     }
 }

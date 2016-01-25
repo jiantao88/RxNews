@@ -43,9 +43,9 @@ public class NewsFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_news, null);
         ButterKnife.bind(this, view);
         viewpager.setOffscreenPageLimit(3);
+        viewpager.setCurrentItem(0);
         setViewPager(viewpager);
         tabLayout.setupWithViewPager(viewpager);
-        AppService.getInstance().initNews(getmTaskId(), Constant.NEWSTYPE_KEJI);
         return view;
     }
 
