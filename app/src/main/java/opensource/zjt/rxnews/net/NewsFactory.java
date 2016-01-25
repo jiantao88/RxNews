@@ -6,7 +6,7 @@ package opensource.zjt.rxnews.net;
  */
 public class NewsFactory {
     private static RxNewsApi rxNewsApi;
-
+    private static RxNewsImageApi rxNewsImageApi;
     public NewsFactory() {
 
     }
@@ -16,8 +16,20 @@ public class NewsFactory {
             if (rxNewsApi == null) {
                 NewsClient newsClient = new NewsClient();
                 rxNewsApi = newsClient.getRxNewsApi();
+                rxNewsImageApi = newsClient.getRxNewsImageApi();
             }
             return rxNewsApi;
+        }
+    }
+
+    public static RxNewsImageApi getRxNewsImageApi() {
+        synchronized (NewsFactory.class) {
+            if (rxNewsImageApi == null) {
+                NewsClient newsClient = new NewsClient();
+                rxNewsApi = newsClient.getRxNewsApi();
+                rxNewsImageApi = newsClient.getRxNewsImageApi();
+            }
+            return rxNewsImageApi;
         }
     }
 }

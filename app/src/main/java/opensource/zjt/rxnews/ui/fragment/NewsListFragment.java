@@ -22,16 +22,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import opensource.zjt.rxnews.R;
 import opensource.zjt.rxnews.base.AppService;
-import opensource.zjt.rxnews.base.RxBus;
-import opensource.zjt.rxnews.event.NewsEvent;
 import opensource.zjt.rxnews.bean.NewsModel;
 import opensource.zjt.rxnews.net.Constant;
 import opensource.zjt.rxnews.presenter.NewsPresenter;
 import opensource.zjt.rxnews.presenter.NewsPresenterImpl;
-import opensource.zjt.rxnews.rxmethod.RxNews;
 import opensource.zjt.rxnews.ui.activity.NewsDetailActivity;
 import opensource.zjt.rxnews.view.NewsView;
-import rx.functions.Action1;
 
 /**
  * A fragment representing a list of Items.
@@ -147,8 +143,7 @@ public class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
-
+//        ButterKnife.unbind(this);
     }
 
     @Override

@@ -13,6 +13,7 @@ public class Constant {
     public static final String NEWSTYPE_HUABIAN = "huabian";
     public static final String NEWSTYPE_GUOJI = "world";
     public static final String NEWSTYPE_SHEHUI = "social";
+    public static final String IMAGES_URL = "http://api.laifudao.com/open/tupian.json";
 
     public enum GetNewsWay {
         INIT, UPDATA, LOADMORE;

@@ -7,4 +7,9 @@
     <string name="action_settings">Settings</string>
     <string name="transition_news_img">transition_news_img</string>
     <string name="load_fail">加载失败</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="image_hit">加载更多</string>
+    <string name="no_dev">暂未实现</string>
 </resources>

@@ -17,7 +17,4 @@ public interface RxNewsApi {
                                    @Query("key") String key,
                                    @Query("num") String num,
                                    @Query("page")String page);
-
-    @GET("{num}/{page}")
-    Observable<NewsModel> loadMoreNews(@Path("num") String num, @Path("page") String page);
 }
