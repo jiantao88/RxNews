@@ -38,11 +38,15 @@ public class NewsPresenterImpl implements NewsPresenter {
         public void call(Object o) {
             if (o instanceof NewsEvent) {
                 if (((NewsEvent) o).getmEventResult().equals(Constant.Result.SUCCESSS)) {
-                    newsView.hideProgress();
-                    newsView.addNew(((NewsEvent) o).getNews().getNewslist());
+                    if (newsView != null) {
+                        newsView.hideProgress();
+                        newsView.addNew(((NewsEvent) o).getNews().getNewslist());
+                    }
                 } else if (((NewsEvent) o).getmEventResult().equals(Constant.Result.FAIL)) {
-                    newsView.hideProgress();
-                    newsView.showLoadFail();
+                    if (newsView != null) {
+                        newsView.hideProgress();
+                        newsView.showLoadFail();
+                    }
                 }
             }
         }

@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 
-import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

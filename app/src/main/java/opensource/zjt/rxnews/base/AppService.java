@@ -1,5 +1,8 @@
 package opensource.zjt.rxnews.base;
 
+import com.google.gson.Gson;
+import com.rxnews.greendao.DBHelper;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -18,6 +21,9 @@ public class AppService {
     private static AppService instance = new AppService();
     private static RxNewsApi rxNewsApi;
     private static ExecutorService sSingleThreadExecutor;
+    private static DBHelper dbHelper;
+    private static Gson sGson;
+
     private Map<Integer, CompositeSubscription> compositeSubscriptionMap;
 
     public AppService() {
@@ -25,13 +31,19 @@ public class AppService {
 
     public void initService() {
         compositeSubscriptionMap = new HashMap<>();
+        sGson=new Gson();
         sSingleThreadExecutor = Executors.newSingleThreadExecutor();
         sSingleThreadExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 rxNewsApi = NewsFactory.getRxNewsApi();
+                dbHelper = DBHelper.getInstance(BaseApplication.getmContext());
             }
         });
+    }
+
+    public static Gson getsGson() {
+        return sGson;
     }
 
     public void addCompositeSub(int taskId) {
@@ -40,6 +52,10 @@ public class AppService {
             compositeSubscription = new CompositeSubscription();
             compositeSubscriptionMap.put(taskId, compositeSubscription);
         }
+    }
+
+    public static DBHelper getDbHelper() {
+        return dbHelper;
     }
 
     public void removeCompositeSub(int taskId) {
