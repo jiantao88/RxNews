@@ -10,7 +10,7 @@ import retrofit.http.Query;
  * Copyright © 2015 impetusconsulting. All rights reserved
  */
 public interface RxNewsImageApi {
-    @GET("/meinv/other")
+    @GET("/meinv/")
     Call<ImageModel> loadImage(
             @Query("key") String key,
             @Query("num") int num,

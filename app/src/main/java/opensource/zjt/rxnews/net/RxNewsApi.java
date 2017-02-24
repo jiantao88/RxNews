@@ -12,7 +12,7 @@ import rx.Observable;
  */
 public interface RxNewsApi {
 
-    @GET("/{type}/other")
+    @GET("/{type}/")
     Observable<NewsModel> loadNews(@Path("type")String type,
                                    @Query("key") String key,
                                    @Query("num") String num,

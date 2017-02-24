@@ -5,7 +5,7 @@ package opensource.zjt.rxnews.net;
  * Copyright © 2015 impetusconsulting. All rights reserved
  */
 public class Constant {
-    public static final String BASEURL = "http://api.huceo.com";
+    public static final String BASEURL = "https://api.tianapi.com";
     public static final int PAZE_SIZE = 10;
     public static final String NEWSDETAIL = "newsdetal";
     public static final String NEWSTYPE_KEJI = "keji";

@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -71,6 +72,13 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
     @Override
     public void showNewsDetailContent(String detailUrl) {
         detailWebview.loadUrl(detailUrl);
+        detailWebview.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+        });
     }
 
     @Override
