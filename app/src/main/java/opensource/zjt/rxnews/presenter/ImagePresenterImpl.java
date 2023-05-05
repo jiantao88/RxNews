@@ -43,4 +43,12 @@ public class ImagePresenterImpl implements ImagePresenter, ImageModelImpl.OnLoad
         mImageView.hideProgress();
         mImageView.showLoadFailMsg();
     }
+    public void clear() {
+    mImageList.clear();
+    notifyDataSetChanged();
+    }
+    public void clearImageList() {
+    mImageView.clearImages();
+    }
+
 }
